@@ -2,21 +2,24 @@
 
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
 <script>
-function emoji(){
-  requestAnimationFrame(emoji)
-  const em = ['a', 'b', 'c']
   
-  if (nn.mouseDown) {
+function emoji(){
+  // requestAnimationFrame(emoji)
+  const em = ['a']
+  const l1 = [nn.random(nn.width), nn.random(nn.height)]
+  const l2 = [nn.random(nn.width), nn.random(nn.height)]
+  
+
     const e = nn.create('span')
       .content(nn.random(em))
       .css({position: 'absolute',
            fontSize: 100,
-           left: nn.random(nn.width),
-           top: nn.random(nn.height)})
+           left: l1[0],
+           top: l1[1]})
             // left: nn.mouseX,
             // top: nn.mouseY
       .addTo('body')
-  }
+  
 }
 nn.on('load',emoji)
 
