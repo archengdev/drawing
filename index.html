@@ -9,17 +9,18 @@ function emoji(){
   const l1 = [nn.random(nn.width), nn.random(nn.height)]
   const l2 = [nn.random(nn.width), nn.random(nn.height)]
   
-
-    const e = nn.create('span')
-      .content(nn.random(em))
-      .css({position: 'absolute',
-           fontSize: 100,
-           left: l1[0],
-           top: l1[1]})
-            // left: nn.mouseX,
-            // top: nn.mouseY
-      .addTo('body')
-  
+  for (i = 0; i < 100; i++) {
+  nn.create('span')
+    // .content(nn.random(em))
+    .content('.')
+    .css({position: 'absolute',
+         fontSize: 100,
+         left: nn.lerp(l1[0], l2[0], 0.01 * i),
+         top: nn.lerp(l1[1], l2[1], 0.01 * i)})
+          // left: nn.mouseX,
+          // top: nn.mouseY
+    .addTo('body')
+  }
 }
 nn.on('load',emoji)
 
