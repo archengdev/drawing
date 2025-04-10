@@ -1,32 +1,53 @@
 <link rel="stylesheet" href="https://generativeart.online/css/drawing-app.css">
-
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
 <script>
+const numbers = ['0️⃣','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟']
+let numOnScreen = []
+let coords = []
+let currNum = 10
 
-let l1 = [nn.random(nn.width), nn.random(nn.height)]
-let l2 = [nn.random(nn.width), nn.random(nn.height)]
+function onClick() {
+  if (nn.dist(0,0,nn.mouseX,nn.mouseY) > 0.001 && currNum >= 0) {
+    numOnScreen.push(
+      nn.create('span')
+        .content(numbers[currNum])
+        .css({position: 'absolute', left: nn.mouseX-12, top: nn.mouseY-15})
+        .addTo('body'))
+    coords.push([nn.mouseX-12, nn.mouseY-15])
+    currNum -= 1
+    // if (numOnScreen.length > 1) {
+    // numOnScreen.shift().remove()
+    // }
+  }
+}
+  
+// let l1 = [nn.random(nn.width), nn.random(nn.height)]
+// let l2 = [nn.random(nn.width), nn.random(nn.height)]
+let l1
+let l2
 let i = 0
-let id
+let j = 0
 function main(){
-  id = requestAnimationFrame(main)
-  nn.create('span')
-    .content('.')
-    .css({position: 'absolute',
-         fontSize: 100,
-         left: nn.lerp(l1[0], l2[0], 0.01 * i),
-         top: nn.lerp(l1[1], l2[1], 0.01 * i)})
-          // left: nn.random(nn.width),
-          // top: nn.random(nn.height)})
-    .addTo('body')
-  i += 1
-  if (i >= 100) {
-    cancelAnimationFrame(id)
-    i = 0
-    l1 = l2
-    l2 = [nn.random(nn.width), nn.random(nn.height)]
+    if (currNum < 0) {
+      let id = requestAnimationFrame(main)
+      nn.create('span')
+        .content('.')
+        .css({position: 'absolute',
+             fontSize: 200,
+             left: nn.lerp(coords[j][0], coords[j+1][0], 0.01 * i),
+             top: nn.lerp(coords[j][1], coords[j+1][1], 0.01 * i)})
+        .addTo('body')
+      i += 1
+      if (i >= 1000) {
+        cancelAnimationFrame(id)
+        i = 0
+        l1 = l2
+        l2 = [nn.random(nn.width), nn.random(nn.height)]
+      }
   }
 }
          
-nn.on('load',main)
+nn.on('mousedown',onClick)
+nn.on('click', main)
 
 </script>
