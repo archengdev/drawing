@@ -13,41 +13,53 @@ function onClick() {
         .content(numbers[currNum])
         .css({position: 'absolute', left: nn.mouseX-12, top: nn.mouseY-15})
         .addTo('body'))
-    coords.push([nn.mouseX-12, nn.mouseY-15])
+    coords.push([nn.mouseX, nn.mouseY-15])
     currNum -= 1
     // if (numOnScreen.length > 1) {
     // numOnScreen.shift().remove()
     // }
   }
 }
-  
-// let l1 = [nn.random(nn.width), nn.random(nn.height)]
-// let l2 = [nn.random(nn.width), nn.random(nn.height)]
-let l1
-let l2
+
 let i = 0
 let j = 0
+let first = true
 function main(){
     if (currNum < 0) {
+      if (first) {
+        numOnScreen.shift().remove()
+        first = false
+      }
+      
       let id = requestAnimationFrame(main)
       nn.create('span')
         .content('.')
         .css({position: 'absolute',
-             fontSize: 200,
+             // fontSize: 200,
              left: nn.lerp(coords[j][0], coords[j+1][0], 0.01 * i),
              top: nn.lerp(coords[j][1], coords[j+1][1], 0.01 * i)})
         .addTo('body')
       i += 1
-      if (i >= 1000) {
-        cancelAnimationFrame(id)
+      if (i >= 100) {
+        j++
+        numOnScreen.shift().remove()
+        // cancelAnimationFrame(id)
         i = 0
-        l1 = l2
-        l2 = [nn.random(nn.width), nn.random(nn.height)]
       }
   }
+}
+  
+function reset() {
+  numOnScreen = []
+  coords = []
+  currNum = 10
+  i = 0
+  j = 0
+  first = true
 }
          
 nn.on('mousedown',onClick)
 nn.on('click', main)
+nn.on('keypress', reset)
 
 </script>
