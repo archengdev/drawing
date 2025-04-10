@@ -6,8 +6,9 @@
 let l1 = [nn.random(nn.width), nn.random(nn.height)]
 let l2 = [nn.random(nn.width), nn.random(nn.height)]
 let i = 0
+let id
 function main(){
-  // requestAnimationFrame(main)
+  id = requestAnimationFrame(main)
   nn.create('span')
     .content('.')
     .css({position: 'absolute',
@@ -19,8 +20,9 @@ function main(){
     .addTo('body')
   i += 1
   if (i >= 100) {
+    cancelAnimationFrame(id)
     i = 0
-    l1 = [nn.random(nn.width), nn.random(nn.height)]
+    l1 = l2
     l2 = [nn.random(nn.width), nn.random(nn.height)]
   }
 }
