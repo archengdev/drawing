@@ -3,8 +3,8 @@
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
 <script>
 
-const l1 = [nn.random(nn.width), nn.random(nn.height)]
-const l2 = [nn.random(nn.width), nn.random(nn.height)]
+let l1 = [nn.random(nn.width), nn.random(nn.height)]
+let l2 = [nn.random(nn.width), nn.random(nn.height)]
 let i = 0
 function main(){
   // requestAnimationFrame(main)
@@ -18,6 +18,11 @@ function main(){
           // top: nn.random(nn.height)})
     .addTo('body')
   i += 1
+  if (i >= 100) {
+    i = 0
+    l1 = [nn.random(nn.width), nn.random(nn.height)]
+    l2 = [nn.random(nn.width), nn.random(nn.height)]
+  }
 }
          
 nn.on('load',main)
