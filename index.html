@@ -1,14 +1,8 @@
-<link rel="stylesheet" href="https://generativeart.online/css/drawing-app.css"> <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script><script> const numbers = ['0️⃣','1️⃣',
-'2️⃣',
-'3️⃣',
-'4️⃣',
-'5️⃣',
-'6️⃣',
-'7️⃣',
-'8️⃣',
-'9️⃣',
-'🔟']
+<link rel="stylesheet" href="https://generativeart.online/css/drawing-app.css"> <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script><script>
+  
+const numbers = ['0️⃣','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟']
 let numOnScreen = []; let coords = []; let currNum = 10
+
 function onClick() {
   
   if (nn.dist(0,0,nn.mouseX,nn.mouseY) > 0.001 && currNum >= 0) {
@@ -23,8 +17,8 @@ function onClick() {
 
   
   
-let i = 0; let j = 0; let first = true
-function main() {
+let i = 0; let j = 0; let first = true; let text
+function draw() {
   
     if (currNum < 0) {
       
@@ -33,7 +27,7 @@ function main() {
         first = false
       }
       
-      requestAnimationFrame(main)
+      requestAnimationFrame(draw)
       nn.create('span')
         .content('.')
         .css({position: 'absolute',
@@ -49,6 +43,13 @@ function main() {
       
     }
   
+  if (j >= 10) {
+    text = nn.create('span')
+            .content('Press any key to draw more')
+            .css({position:'absolute',left:10,top:10})
+            .addTo('body')
+  }
+  
 }
   
 function reset() {
@@ -58,10 +59,11 @@ function reset() {
   i = 0
   j = 0
   first = true
+  text.remove()
 }
          
 nn.on('mousedown',onClick)
-nn.on('click', main)
+nn.on('click', draw)
 nn.on('keypress', reset)
 
 </script>
